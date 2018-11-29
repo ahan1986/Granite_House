@@ -15,75 +15,81 @@
         @*the input is hidden. We need to retrieve the Product.Id so that when we do a POST action method, we get the value of Products.Id.*@
         <input hidden asp-for="Products.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group row">
-            <div class="col-2">
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="Products.Name"></label>
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="Products.Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Products.Name" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Name" class="text-danger"></span>
             </div>
-            <div class="col-5">
-                <input asp-for="Products.Name" class="form-control" />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Products.Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Products.Price" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.Price" class="text-danger"></span>
             </div>
-            <span asp-validation-for="Products.Name" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="Products.Price"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Products.Price" class="form-control" />
-            </div>
-            <span asp-validation-for="Products.Price" class="text-danger"></span>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
+            <div class="form-group row">
+                <div class="col-4">
 
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="Products.Image"></label>
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="Products.Image"></label>
+                </div>
+                <div class="col-8">
+                    <input type="file" name="files" class="form-control" />
+                </div>
             </div>
-            <div class="col-5">
-                <input type="file" name="files" class="form-control" />
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ProductTypes"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)" class="form-control"></select>
+                </div>
             </div>
-        </div>
-        <div class="form-group row">
-            <div class="col-2">
-                <label asp-for="ProductTypes"></label>
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="SpecialTag"></label>
+                </div>
+                <div class="col-8">
+                    <select asp-for="@Model.Products.SpecialTagsID" asp-items="Model.SpecialTag.ToSelectListItem(Model.Products.SpecialTagsID)" class="form-control"></select>
+                </div>
+
             </div>
-            <div class="col-5">
-                <select asp-for="@Model.Products.ProductTypeId" asp-items="Model.ProductTypes.ToSelectListItem(Model.Products.ProductTypeId)" class="form-control"></select>
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="Products.ShadeColor"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Products.ShadeColor" class="form-control" />
+                </div>
+                <span asp-validation-for="Products.ShadeColor" class="text-danger"></span>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="Products.Available"></label>
+                </div>
+                <div class="col-8">
+                    <input type="checkbox" asp-for="Products.Available" />
+                </div>
             </div>
         </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="SpecialTag"></label>
-            </div>
-            <div class="col-5">
-                <select asp-for="@Model.Products.SpecialTagsID" asp-items="Model.SpecialTag.ToSelectListItem(Model.Products.SpecialTagsID)" class="form-control"></select>
-            </div>
+        <div class="col-1">
 
         </div>
 
-        <div class="form-group row">
-            <div class="col-2">
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="Products.ShadeColor"></label>
-            </div>
-            <div class="col-5">
-                <input asp-for="Products.ShadeColor" class="form-control" />
-            </div>
-            <span asp-validation-for="Products.ShadeColor" class="text-danger"></span>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-2">
-                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
-                <label asp-for="Products.Available"></label>
-            </div>
-            <div class="col-5">
-                <input type="checkbox" asp-for="Products.Available" />
-            </div>
+        <div class="col-3">
+            <img src="@Model.Products.Image" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9;" />
         </div>
 
         <div class="form-group">
