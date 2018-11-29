@@ -1,0 +1,45 @@
+﻿@*add the model for this view page that was create that references the model where the respective controller is getting it from*@
+@model IEnumerable<Granite_House.Models.ProductTypes> 
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<br /><br />
+
+<div class="row">
+    <div class="col-6">
+        <h2 class="text-info"> Product Type List </h2>
+    </div>
+    <div class="col-6 text-right">
+        <!-- &nbsp; creates space in the html -->
+        <a asp-action="Create" class="btn btn-info">&nbsp; New Product Type </a>
+    </div>
+</div>
+
+<br />
+<div>
+    <table class="table table-striped border">
+        <tr class="table-info">
+            <th>
+                @Html.DisplayNameFor(m => m.Name)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+
+        @foreach(var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(m => item.Name)
+                </td>
+                <td>
+                    @*name of the partial you want to add. model is equal to @model in the partial page on the top and it's delivering the int item.Id. *@
+                    <partial name="_TableButtonPartial" model="item.Id" />
+                </td>
+            </tr>
+        }
+    </table>
+</div>

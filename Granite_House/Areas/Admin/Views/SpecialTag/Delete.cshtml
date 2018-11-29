@@ -1,0 +1,39 @@
+﻿@model Granite_House.Models.SpecialTag
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<br />
+<br />
+<h2 class="text-info">Delete Special Tag</h2>
+
+<form method="post" asp-action="Delete">
+    <div class="p-4 border rounded">
+        @*You will only need the hidden input below with id IF you don't have the last input tag with the asp-route-ID with Model.Id.  You just need one place that references the Id inside the form tag that has the method POST. Because you are posting information to the controller
+            <input hidden asp-for="Id" />
+        *@
+
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                @*when you use asp-for. It will bind the Name to productsTypes name property.*@
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-5">
+                @*the input value that the user adds gets replaced by the asp-for with the key Name*@
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            @*the @Model.Id does NOT require the @model reference at the top. This is it's own thing that comes from I believe the controller. I don't know why but the asp-route-id will define both int Id AND specialTag.Id. There's nothing that will define the two params in the Edit POST method individually *@
+            <input type="submit" class="btn btn-primary" asp-route-Id="@Model.Id" value="Update" />
+            @*we didnt reference area because we are in the same area*@
+            <a asp-action="Index" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml");}
+}

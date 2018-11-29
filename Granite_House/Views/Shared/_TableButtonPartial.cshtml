@@ -1,0 +1,11 @@
+﻿@* we must define which object type we will be using inside the paramenter of what we will be using inside this partial view. In this case, it will be an integer. We are adding buttons and those buttons will have an "id" which is an integer and which the users can fetch and edit it. We will pass the product type id*@
+@model int
+
+<td style="width: 150px">
+    <div class="btn-group" role="group">
+        @*Url.Action will go to Edit and use the Model id. Index1.cshtml is sending the id through model="item.Id". The model is what you're using to call the Id in here. Ignore the captialization of models.*@
+        <a type="button" class="btn btn-primary" href="@Url.Action("Edit/" + Model)"><i class="far fa-edit"></i></a>
+        <a type="button" class="btn btn-success" href="@Url.Action("Details/" + Model)"><i class="fas fa-info"></i></a>
+        <a type="button" class="btn btn-danger" href="@Url.Action("Delete/" + Model)"><i class="far fa-trash-alt"></i></a>
+    </div>
+</td>

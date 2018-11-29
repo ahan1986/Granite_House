@@ -1,0 +1,34 @@
+﻿@*because we don't need a list of the data, we don't need to set this up as IEnumerable<>. We will be dealing with single Granite types*@
+@model Granite_House.Models.ProductTypes
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+<br />
+<h2 class="text-info"> Create Product Tag </h2>
+
+<form method="post" asp-action="Create">
+    <div class="p-4 border rounded">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class="col-2">
+                @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                <label asp-for="Name"></label>
+            </div>
+            <div class="col-5">
+                <input asp-for="Name" class="form-control" />
+            </div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Create" /> 
+            @*we didnt reference area because we are in the same area*@
+            <a asp-action="Index1" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{ 
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial.cshtml"); }
+}
