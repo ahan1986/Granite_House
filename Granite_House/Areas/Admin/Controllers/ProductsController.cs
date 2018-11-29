@@ -112,5 +112,27 @@ namespace Granite_House.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        //GET : Edit
+        // grabbing the id of the product which user wants to edit.  with that id we have to retrieve the details from the database and show it to the View.
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            //populate the products. We use include so that we can include the specialtag and producttypes. Once we retrieve that we need to grab the first one using SingleOrDefaultAsync.
+            ProductsVM.Products = await _db.Products.Include(m => m.SpecialTag).Include(m => m.ProductTypes).SingleOrDefaultAsync(m => m.Id == id);
+
+            // check if it's been retrieved or not
+            if(ProductsVM.Products==null)
+            {
+                return NotFound();
+            }
+
+            return View(ProductsVM);
+        }
+
+
     }
 }

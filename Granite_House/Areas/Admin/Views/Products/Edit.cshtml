@@ -2,16 +2,18 @@
 @model Granite_House.Models.ViewModels.ProductsViewModel
 @using Granite_House.Extensions;
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
 <h2>Create</h2>
 <br />
-<h2 class="text-info"> Create Product </h2>
+<h2 class="text-info"> Edit Product </h2>
 
 @*transferring images, we need enctype*@
 <form method="post" enctype="multipart/form-data">
     <div class="p-4 border rounded">
+        @*the input is hidden. We need to retrieve the Product.Id so that when we do a POST action method, we get the value of Products.Id.*@
+        <input hidden asp-for="Products.Id" />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
         <div class="form-group row">
             <div class="col-2">

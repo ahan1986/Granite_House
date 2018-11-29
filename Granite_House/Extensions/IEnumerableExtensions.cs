@@ -21,7 +21,7 @@ namespace Granite_House.Extensions
                        // create another extension method using GetPropertyValue where we will create in ReflectionExtension.cs
                        Text = item.GetPropertyValue("Name"),
                        Value = item.GetPropertyValue("Id"),
-                       Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString())
+                       Selected = item.GetPropertyValue("Id").Equals(selectedValue.ToString()) //if the user selects something from the dropdown menu, value we got equals the selectedValue from this argument then Selected becomes true;
                    };
         }
     }
