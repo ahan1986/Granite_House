@@ -133,6 +133,43 @@ namespace Granite_House.Controllers
             return View(ProductsVM);
         }
 
+        //POST : Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            if (ModelState.IsValid)
+            {
+                string webRootPath = _hostingEnvironment.WebRootPath;
+                var files = HttpContext.Request.Form.Files;
 
+                var productFromDb = _db.Products.Where(m => m.Id == ProductsVM.Products.Id).FirstOrDefault();
+
+                if (files[0].Length > 0 && files[0] != null)
+                {
+                    //if user uploads a new image
+                    var uploads = Path.Combine(webRootPath, SD.ImageFolder);
+                    var extension_new = Path.GetExtension(files[0].FileName);
+                    var extension_old = Path.GetExtension(productFromDb.Image);
+
+                    if(System.IO.File.Exists(Path.Combine(uploads, ProductsVM.Products.Id + extension_old)))
+                    {
+                        System.IO.File.Delete(Path.Combine(uploads, ProductsVM.Products.Id + extension_old));
+                    }
+
+                    using (var filestream = new FileStream(Path.Combine(uploads, ProductsVM.Products.Id + extension_new), FileMode.Create))
+                    {
+                        // this will copy the files to the server and rename it 
+                        files[0].CopyTo(filestream);
+                    }
+                    // we will have the exact spot where the images are saved on the server with the file name and extension 
+                    ProductsVM.Products.Image = @"\" + SD.ImageFolder + @"\" + ProductsVM.Products.Id + extension_new;
+                }
+
+                if(ProductsVM.Products.Image != null)
+                {
+                    productFromDb.Image = ProductsVM.Products.Image;
+                }
+        }
     }
 }
