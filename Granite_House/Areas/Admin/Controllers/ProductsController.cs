@@ -56,6 +56,7 @@ namespace Granite_House.Controllers
         public IActionResult Create()
         {
             //goal is to display a dropdown with all of producttypes and specialtags
+            //if you see where we defined ProductsVM above, the producttypes and specialtag are getting data from our db and making it into a list. They are in IEnumerable(or list of special tag) SO inorder to make a dropdown for them we have to convert them to an IEnumerable of select list item. To do this we need an extension. We would need to extend the IEnumerable so we can add a function to do what we want. Extensions allow you to add to existing types.
             return View(ProductsVM);
         }
 
@@ -95,11 +96,21 @@ namespace Granite_House.Controllers
                     // this will copy the files to the server and rename it 
                     files[0].CopyTo(filestream);
                 }
-
-                //update the products from the database with the new path
+                // we will have the exact spot where the images are saved on the server with the file name and extension 
+                productsFromDb.Image = @"\" + SD.ImageFolder + @"\" + ProductsVM.Products.Id + extension; 
+                
+            } else
+            {
+                //when user does not upload image. We will be combining to the default location PLUS default product image bc we have that name defined. So the uploads will have the exact image name. 
+                var uploads = Path.Combine(webRootPath, SD.ImageFolder + @"\" + SD.DefaultProductImage);
+                //copy the image from the server and rename so that we have the default image as the Product Id
+                System.IO.File.Copy(uploads, webRootPath + @"\" + SD.ImageFolder + @"\" + ProductsVM.Products.Id + ".png");
+                productsFromDb.Image = @"\" + SD.ImageFolder + @"\" + ProductsVM.Products.Id + ".png";
             }
 
-            return View();
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

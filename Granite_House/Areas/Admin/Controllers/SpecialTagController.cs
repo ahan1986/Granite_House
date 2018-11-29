@@ -105,7 +105,6 @@ namespace Granite_House.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-
             var specialTag = await _db.SpecialTag.FindAsync(Id);
             if(specialTag == null)
             {
