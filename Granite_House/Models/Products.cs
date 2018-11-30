@@ -23,7 +23,7 @@ namespace Granite_House.Models
         [ForeignKey("ProductTypeId")]
         public virtual ProductTypes ProductTypes { get; set; }
 
-        // attribute for display. Change the name of this to ProductType
+        // attribute for display. Change the name of this to SpecialTag
         [Display(Name = "Special tag")] 
         public int SpecialTagsID { get; set; }
         // we will link the foreign key to the product type above. This way we will have the integrity of foreign relation. Adding virtual, the following model will not go to the database.
