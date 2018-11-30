@@ -5,15 +5,34 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Granite_House.Models;
+using Granite_House.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Granite_House.Controllers
 {   [Area("Customer")]
     public class HomeController : Controller
-    {
-        public IActionResult Index()
+    {   
+        // =============================================================
+        // retrieve all of the products from the database
+        private readonly ApplicationDbContext _db;
+        //constructor to get dependency injection and get applicationDbContext
+        public HomeController( ApplicationDbContext db )
         {
-            return View();
+            _db = db;
         }
+        // =============================================================
+
+        //Index Action Method
+        public async Task<IActionResult> Index()
+        {   
+            //1.
+            var productList = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTag).ToListAsync();
+
+            return View(productList);
+        }
+        /*
+         1. Goes into ApplicationDbContext.cs and finds Products where we have DbSet so that the database will have Products table
+        */
 
         public IActionResult About()
         {
