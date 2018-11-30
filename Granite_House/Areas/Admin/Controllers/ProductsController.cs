@@ -187,6 +187,13 @@ namespace Granite_House.Controllers
             //if it's not valid
             return View(ProductsVM);
         }
+        //1. when we replace an image, we have to delete the existing image and then update the new one. find out the product from the database.
+        //2. if user uploads a new image.  We are grabbing the new one and the old files so that the new one can replace the old one.
+        //3. here we are checking to see if the old one does Exists and the inside the if block we will Delete that file.
+        //4. then we need to append the file into the server.  grab the filestream and add the image.
+        //5. then update the productFromDb and save everything to the database. if the ProductsVM.Products.Image is NOT null, it means that we have gone through the process and have appended the image. Then we save the image to the productFromDb.Image.
+        //6. Now update all the other property in the database. And save all the changes.
+
 
         //GET : Details =========================================================
         public async Task<IActionResult> Details( int? id )
@@ -230,7 +237,9 @@ namespace Granite_House.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed( int Id )
         {
+            //1.
             string webRootPath = _hostingEnvironment.WebRootPath;
+            //2.
             Products products = await _db.Products.FindAsync(Id);
 
             if (products == null)
@@ -239,27 +248,28 @@ namespace Granite_House.Controllers
             }
             else
             {
-                var uploads = Path.Combine(webRootPath, SD.ImageFolder);
+
+                var uploads = Path.Combine(webRootPath, SD.ImageFolder); // this will give you the path name for this image EXCEPT the extension. The next step is to get the extension.
+                //3.
                 var extension = Path.GetExtension(products.Image);
             
-
+                //4.
                 if(System.IO.File.Exists(Path.Combine(uploads, products.Id + extension)))
                 {
                     System.IO.File.Delete(Path.Combine(uploads, products.Id + extension));
                 }
+                //5.
                 _db.Products.Remove(products);
                 await _db.SaveChangesAsync();
 
                 return RedirectToAction(nameof(Index));
             }
         }
+        //1. Gets into the wwwroot folder
+        //2. finding the product from the database with the specific Id we are looking for. You can use where clause and firstOrDefault
+        //3. extension is the end part of the path. e.g. .ext .jpg .png
+        //4. find if the image exists in the file that you've created locally then delete the image in the 'images' folder inside wwwroot.
+        //5. then remove the image from the database
 
     }
 }
-
-//1. when we replace an image, we have to delete the existing image and then update the new one. find out the product from the database.
-//2. if user uploads a new image.  We are grabbing the new one and the old files so that the new one can replace the old one.
-//3. here we are checking to see if the old one does Exists and the inside the if block we will Delete that file.
-//4. then we need to append the file into the server.  grab the filestream and add the image.
-//5. then update the productFromDb and save everything to the database. if the ProductsVM.Products.Image is NOT null, it means that we have gone through the process and have appended the image. Then we save the image to the productFromDb.Image.
-//6. Now update all the other property in the database. And save all the changes.
