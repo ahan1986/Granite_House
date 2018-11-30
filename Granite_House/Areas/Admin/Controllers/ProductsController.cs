@@ -206,6 +206,24 @@ namespace Granite_House.Controllers
             return View(ProductsVM);
         }
 
+        //GET : Delete =========================================================
+        public async Task<IActionResult> Delete( int? id )
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            
+            ProductsVM.Products = await _db.Products.Include(m => m.SpecialTag).Include(m => m.ProductTypes).SingleOrDefaultAsync(m => m.Id == id);
+
+            if (ProductsVM.Products == null)
+            {
+                return NotFound();
+            }
+
+            return View(ProductsVM);
+        }
+
     }
 }
 
