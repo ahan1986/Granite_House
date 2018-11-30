@@ -24,34 +24,23 @@ namespace Granite_House.Controllers
 
         //Index Action Method
         public async Task<IActionResult> Index()
-        {   
-            //1.
+        {
+            //1. Goes into ApplicationDbContext.cs and finds Products where we have DbSet so that the database will have Products table
             var productList = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTag).ToListAsync();
 
             return View(productList);
         }
-        /*
-         1. Goes into ApplicationDbContext.cs and finds Products where we have DbSet so that the database will have Products table
-        */
 
-        public IActionResult About()
-        {
+
+        public async Task<IActionResult> Details(int id)
+        {   // on the Index.cshtml in the "a" tag, we pass the "id" when we use "asp-route-id" and pass in the product.Id. So that Id becomes the int id in the argument for Details. We have to also tell which action the imformation is being sent to so "asp-action" and which controller "asp-controller"
             ViewData["Message"] = "Your application description page.";
 
-            return View();
+            var product = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTag).Where(m=>m.Id == id).FirstOrDefaultAsync();
+
+            return View(product);
         }
 
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
