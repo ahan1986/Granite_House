@@ -233,6 +233,7 @@ namespace Granite_House.Controllers
         }
 
         //POST : Delete =========================================================
+        //6.
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed( int Id )
@@ -270,6 +271,7 @@ namespace Granite_House.Controllers
         //3. extension is the end part of the path. e.g. .ext .jpg .png
         //4. find if the image exists in the file that you've created locally then delete the image in the 'images' folder inside wwwroot.
         //5. then remove the image from the database
+        //6. Because we named it "DeleteConfirmed" which is not Delete which is the name of the action we have given, We will type ActionName("Delete") to tell visual studio that it's a delete post action method
 
     }
 }
