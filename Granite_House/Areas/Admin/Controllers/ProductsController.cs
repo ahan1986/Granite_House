@@ -56,10 +56,13 @@ namespace Granite_House.Controllers
         //GET : Products Create
         public IActionResult Create()
         {
-            //goal is to display a dropdown with all of producttypes and specialtags
-            //if you see where we defined ProductsVM above, the producttypes and specialtag are getting data from our db and making it into a list. They are in IEnumerable(or list of special tag) SO inorder to make a dropdown for them we have to convert them to an IEnumerable of select list item. To do this we need an extension. We would need to extend the IEnumerable so we can add a function to do what we want. Extensions allow you to add to existing types.
+            //1.
+            //2. 
             return View(ProductsVM);
         }
+        /* 1. goal is to display a dropdown with all of producttypes and specialtags
+           2. if you see where we defined ProductsVM above, the producttypes and specialtag are getting data from our db and making it into a list. They are in IEnumerable(or list of special tag) SO inorder to make a dropdown for them we have to convert them to an IEnumerable of select list item. To do this we need an extension. We would need to extend the IEnumerable so we can add a function to do what we want. Extensions allow you to add to existing types. */
+
 
         //POST: Products Create =========================================================
         [HttpPost, ActionName("Create")]
