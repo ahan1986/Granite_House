@@ -1,0 +1,97 @@
+﻿@*because we don't need a list of the data, we don't need to set this up as IEnumerable<>. We will be dealing with single Granite types*@
+@model Granite_House.Models.Products
+@using Granite_House.Extensions;
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+<br />
+<h2 class="text-info"> Product Details </h2>
+
+@*transferring images, we need enctype*@
+<form method="post" class="container">
+    <div class="p-4 border rounded row">
+        @*the input is hidden. We need to retrieve the Product.Id so that when we do a POST action method, we get the value of Products.Id.*@
+        <div class="col-8">
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="Name"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Name" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                    <label asp-for="ShadeColor"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="ShadeColor" class="form-control" readonly />
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="Price"></label>
+                </div>
+                <div class="col-8">
+                    <input asp-for="Price" class="form-control" readonly />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label asp-for="ProductTypes"></label>
+                </div>
+                <div class="col-8">
+                    @*displays in a dropdown*@
+                    <input asp-for="ProductTypes.Name" class="form-control" readonly />
+                </div>
+            </div>
+
+            @if (!Model.SpecialTag.Name.Equals("--None--"))
+            {
+                <div class="form-group row">
+                    <div class="col-4">
+                        @*when you use asp-for. It will bind the Name to productsTypes *name* property in the Model!.*@
+                        <label asp-for="SpecialTag"></label>
+                    </div>
+                    <div class="col-8">
+                        <input asp-for="SpecialTag.Name" class="form-control" readonly />
+                    </div>
+
+                </div>
+            }
+
+            <div class="form-group row">
+                <div class="col-4">
+
+                </div>
+                <div class="col-8">
+                    <button type="submit" value="Add to Bag" asp-route-id="@Model.Id" class="btn btn-primary form-control">Add To Bag</button>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="col-3">
+            <img src="@Model.Image" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9;" />
+            <br /><br />
+            @if(Model.Available)
+            {
+                <img src="~/images/vector-illustration-green-black-stock-260nw-205656733.jpg" width="50%" height="30%" />
+            }
+        </div>
+
+        <div class="form-group">
+            @*use this Id (from Models.Products) that is hidden from view to post it to the controller and have the controller grab the id and add it to our shopping cart*@
+            <input hidden asp-for="Id" />
+            @*we didnt reference area because we are in the same area*@
+            <a asp-action="Index1" class="btn btn-success">Back to List</a>
+        </div>
+    </div>
+</form>

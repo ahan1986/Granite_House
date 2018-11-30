@@ -31,7 +31,7 @@ namespace Granite_House.Controllers
             return View(productList);
         }
 
-
+        //GET action method for Details Page
         public async Task<IActionResult> Details(int id)
         {   // on the Index.cshtml in the "a" tag, we pass the "id" when we use "asp-route-id" and pass in the product.Id. So that Id becomes the int id in the argument for Details. We have to also tell which action the imformation is being sent to so "asp-action" and which controller "asp-controller"
             ViewData["Message"] = "Your application description page.";

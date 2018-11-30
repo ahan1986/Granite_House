@@ -41,6 +41,16 @@ namespace Granite_House
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            // when we want session storage we need to set it up here!
+            services.AddSession(options =>
+            {
+                //we have options that we can choose from
+                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                // we can use cookies for Http
+                options.Cookie.HttpOnly = true;
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,6 +72,8 @@ namespace Granite_House
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+            // enable sessions.  we can look up Session on ASP.NET core online to give us many session options. We need sessionExtension method which we can grab more information on the documentations.
+            app.UseSession();
 
             app.UseMvc(routes =>
             {
