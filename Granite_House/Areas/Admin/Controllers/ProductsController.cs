@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Granite_House.Data;
+using Granite_House.Models;
 using Granite_House.Models.ViewModels;
 using Granite_House.Utlity;
 using Microsoft.AspNetCore.Hosting.Internal;
@@ -222,6 +223,35 @@ namespace Granite_House.Controllers
             }
 
             return View(ProductsVM);
+        }
+
+        //POST : Delete =========================================================
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed( int Id )
+        {
+            string webRootPath = _hostingEnvironment.WebRootPath;
+            Products products = await _db.Products.FindAsync(Id);
+
+            if (products == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var uploads = Path.Combine(webRootPath, SD.ImageFolder);
+                var extension = Path.GetExtension(products.Image);
+            
+
+                if(System.IO.File.Exists(Path.Combine(uploads, products.Id + extension)))
+                {
+                    System.IO.File.Delete(Path.Combine(uploads, products.Id + extension));
+                }
+                _db.Products.Remove(products);
+                await _db.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
         }
 
     }

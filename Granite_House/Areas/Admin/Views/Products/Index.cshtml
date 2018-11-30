@@ -45,7 +45,8 @@
                 @Html.DisplayFor(m => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(m => item.Price)
+                @*changes the format to currency so it's not just a number*@
+                @String.Format("{0:c}", item.Price)
             </td>
             <td>
                 @Html.DisplayFor(m => item.Available)
@@ -54,7 +55,11 @@
                 @Html.DisplayFor(m => item.ProductTypes.Name)
             </td>
             <td>
-                @Html.DisplayFor(m => item.SpecialTag.Name)
+                @*so that --None-- won't be displayed on the screen. Not making it ugly*@
+                @if (!item.SpecialTag.Name.Equals("--None--"))
+                {
+                    @Html.DisplayFor(m => item.SpecialTag.Name)
+                }
             </td>
             <td>
                 <partial name="_TableButtonPartial" model="item.Id" />
