@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@using Granite_House.Extensions
+@using Granite_House.Utlity
+
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,6 +41,32 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Product</a>
                 </li>
+                @*need dependency inject to be able to check if there is session storage that is being added or not*@
+                @if (HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart") != null)
+                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> &nbsp;
+                            @{
+                                var count = HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart").Count;
+                            }
+                            (@count)
+                        </a>
+
+                    </li>
+
+                                }
+                                else
+                                {
+                    <li style="color:white">
+                        <a asp-area="Customer" asp-controller="ShoppingCart" asp-action="Index" class="nav-link">
+                            <i class="fas fa-shopping-cart"></i> &nbsp;
+
+                            (0)
+                        </a>
+                    </li>
+
+                }
             </ul>
             <div>
                 <partial name="_LoginPartial" />

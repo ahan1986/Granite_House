@@ -42,11 +42,12 @@ namespace Granite_House
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            services.AddDistributedMemoryCache();
             // when we want session storage we need to set it up here!
             services.AddSession(options =>
             {
                 //we have options that we can choose from
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                options.IdleTimeout = TimeSpan.FromMinutes(10);
                 // we can use cookies for Http
                 options.Cookie.HttpOnly = true;
             });
