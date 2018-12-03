@@ -75,6 +75,26 @@ namespace Granite_House.Controllers
          6.  to find out if we stored anything into our session storage go into Views/Shared/_Layout.cshtml.  More notes about checking our session storage there.
              */
 
+        public IActionResult Remove(int id)
+        {
+            List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+            //1.
+            if(lstShoppingCart.Count > 0)
+            {
+                //2.
+                lstShoppingCart.Remove(id);
+            }
+            //3.
+            HttpContext.Session.Set("ssShoppingCart", lstShoppingCart);
+
+            return RedirectToAction(nameof(Index));
+        }
+        /*
+         1. Always good to have this condition
+         2. Removes the id from the session storage
+         3. SET the session key of name "ssShoppingCart" to value lstShoppingCart AGAIN!
+         */
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
