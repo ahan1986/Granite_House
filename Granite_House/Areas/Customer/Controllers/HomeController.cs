@@ -9,7 +9,6 @@ using Granite_House.Data;
 using Microsoft.EntityFrameworkCore;
 using Granite_House.Extensions;
 using Microsoft.AspNetCore.Http;
-using Granite_House.Extensions;
 
 namespace Granite_House.Controllers
 {   [Area("Customer")]
@@ -52,6 +51,7 @@ namespace Granite_House.Controllers
         {
             //1.
             List<int> lstShoppingCart = HttpContext.Session.Get<List<int>>("ssShoppingCart");
+
             //2.
             if (lstShoppingCart == null) 
             {
@@ -61,6 +61,7 @@ namespace Granite_House.Controllers
             lstShoppingCart.Add(id);
             //4.
             HttpContext.Session.Set("ssShoppingCart", lstShoppingCart);
+
             //5.
             return RedirectToAction("Index", "Home", new { area = "Customer" });
         }

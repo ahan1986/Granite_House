@@ -30,7 +30,9 @@ namespace Granite_House
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
-                options.CheckConsentNeeded = context => true;
+                // session storage isn't working so I'm gong to change the below bool to false...OMG this worked..... stupid thing.
+                // GDPR regulates how cookie operate and will not be used until the user consents to them being used! So set this to false so we don't have to worry about this crap.... wasted 3 freaking hours debugging this crap.......
+                options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
