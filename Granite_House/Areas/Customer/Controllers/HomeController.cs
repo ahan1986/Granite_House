@@ -29,6 +29,7 @@ namespace Granite_House.Controllers
         public async Task<IActionResult> Index()
         {
             //1. Goes into ApplicationDbContext.cs and finds Products where we have DbSet so that the database will have Products table
+
             var productList = await _db.Products.Include(m => m.ProductTypes).Include(m => m.SpecialTag).ToListAsync();
 
             return View(productList);

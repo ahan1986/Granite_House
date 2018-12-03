@@ -1,6 +1,10 @@
 ﻿@*because we don't need a list of the data, we don't need to set this up as IEnumerable<>. We will be dealing with single Granite types*@
 @model Granite_House.Models.Products
 @using Granite_House.Extensions;
+@using Microsoft.AspNetCore.Http
+
+@inject IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -70,7 +74,23 @@
 
                 </div>
                 <div class="col-8">
-                    <button type="submit" value="Add to Bag" asp-route-id="@Model.Id" class="btn btn-primary form-control">Add To Bag</button>
+
+                    @{
+                        //The order of lstCart != null matters. The other way around will tell the browser that there's something in the object when there isn't because nothing is in the session storage in the beginning.
+                        List<int> lstCart = HttpContextAccessor.HttpContext.Session.Get<List<int>>("ssShoppingCart");
+                        if (lstCart != null && lstCart.Contains(Model.Id))
+                        {
+                            <button type="submit" value="Remove from Cart" asp-action="remove" asp-route-id="@Model.Id" class="btn btn-primary form-control">Remove from Cart</button>
+                        }
+                        else
+                        {
+                            <button type="submit" value="Add to Cart" asp-route-id="@Model.Id" class="btn btn-primary form-control">Add To Cart</button>
+                        }
+                    }
+
+
+
+
                 </div>
 
             </div>
@@ -81,7 +101,7 @@
         <div class="col-3">
             <img src="@Model.Image" width="100%" style="border-radius: 5px; border: 1px solid #bbb9b9;" />
             <br /><br />
-            @if(Model.Available)
+            @if (Model.Available)
             {
                 <img src="~/images/vector-illustration-green-black-stock-260nw-205656733.jpg" width="50%" height="30%" />
             }
