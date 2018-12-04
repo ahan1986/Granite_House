@@ -100,5 +100,6 @@ namespace Granite_House.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        // If you have more than one action methods, like having 5 buttons that have different functionalities, you can just add more Action Methods like how we are doing it here.
     }
 }
